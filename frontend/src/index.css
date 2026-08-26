@@ -1,53 +1,150 @@
 :root {
-  --sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font: 16px/1.6 var(--sans);
-  letter-spacing: 0.02em;
-  color: #e5e7eb;
-  background: #020617;
+  /* Theme tokens — light (default). Overridden under [data-theme="dark"]. */
+  --bg: #F8F8F9;
+  --card-bg: #FFFFFF;
+  --card-border: transparent;
+  --text: #1A1A1A;
+  --text-muted: #6B6B6B;
+  --border: #E0E0E0;
+  --placeholder: #B0B0B0;
+  --accent: #0F39D6;
+  --accent-text: #FFFFFF;
+
+  /* Derived tokens (kept in sync with --accent above; components never branch on theme). */
+  --accent-bg: rgba(15, 57, 214, 0.1);
+  --accent-border: rgba(15, 57, 214, 0.5);
+  --auth-heading-color: var(--text);
+  --auth-banner-gradient: linear-gradient(160deg, #3355e6 0%, #0f39d6 45%, #081b6b 100%);
+  --auth-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06);
+  --overlay-text: #FFFFFF;
+  --overlay-text-muted: rgba(255, 255, 255, 0.82);
+
+  /* Unrelated to the auth pages; kept from the original scaffold styling. */
+  --text-h: #08060d;
+  --code-bg: #f4f3ec;
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  color-scheme: light;
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color: var(--text);
+  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
 }
 
-* {
-  box-sizing: border-box;
+[data-theme='dark'] {
+  --bg: #101010;
+  --card-bg: #141414;
+  --card-border: #F5C400;
+  --text: #F5F0E6;
+  --text-muted: #9A9A9A;
+  --border: #2A2A2A;
+  --placeholder: #6E6E6E;
+  --accent: #F5C400;
+  --accent-text: #141414;
+
+  --accent-bg: rgba(245, 196, 0, 0.15);
+  --accent-border: rgba(245, 196, 0, 0.5);
+  --auth-heading-color: var(--accent);
+  --auth-banner-gradient: linear-gradient(160deg, #4a3d00 0%, #221b00 55%, #0a0800 100%);
+  --auth-card-shadow: none;
+
+  --text-h: #f3f4f6;
+  --code-bg: #1f2028;
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+  color-scheme: dark;
 }
 
-html,
+[data-theme='dark'] #social .button-icon {
+  filter: invert(1) brightness(2);
+}
+
 body {
   margin: 0;
-  min-height: 100%;
-}
-
-body {
-  background: radial-gradient(circle at top, rgba(99, 102, 241, 0.18), transparent 28%), linear-gradient(180deg, #020617 0%, #09090b 100%);
-  color: #e5e7eb;
+  overflow-x: hidden;
 }
 
 #root {
-  min-height: 100vh;
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-family: var(--sans);
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
 }
 
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
 p {
   margin: 0;
 }
 
-button,
-input {
-  font: inherit;
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
